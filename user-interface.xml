@@ -1,0 +1,74 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version="2.1" xmlns="http://www.w3.org/2001/vxml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.w3.org/2001/vxml http://www.w3.org/TR/voicexml20/vxml.xsd">
+	<form id="#customerIdForm">
+		<block>
+			<prompt>Hello, welcome to the womens peer to peer network.</prompt>
+		</block>
+		<field name="customer_id" type="digits?length=11">
+			<prompt>
+				Please enter or speak your customer I D
+			</prompt>
+			
+			<!-- This grammar is specifically for recognizing dtmf. -->
+			<grammar xml:lang="en-US" root="dtmf-numbers" mode="dtmf">
+				<rule id="dtmf-numbers" scope="public">
+					<one-of>
+						<item> 1 </item>
+						<item> 2 </item>
+						<item> 3 </item>
+						<item> 4 </item>
+						<item> 5 </item>
+						<item> 6 </item>
+						<item> 7 </item>
+						<item> 8 </item>
+						<item> 9 </item>
+						<item> 0 </item>
+					</one-of>
+				</rule>
+			</grammar>
+
+			<!-- This grammar is specifically for recognizing voice on the same input
+				as the dtmf. -->
+			<grammar xml:lang="en-US" root="voice-numbers" mode="voice">
+				<rule id="voice-numbers" scope="public">
+					<one-of>
+						<item> one </item>
+						<item> two </item>
+						<item> three </item>
+						<item> four </item>
+						<item> five </item>
+						<item> six </item>
+						<item> seven </item>
+						<item> eight </item>
+						<item> nine </item>
+						<item> zero </item>
+					</one-of>
+				</rule>
+			</grammar>
+
+			<noinput>
+				<prompt>I did not hear you. Please try again.</prompt>
+				<reprompt />
+			</noinput>
+
+			<nomatch>
+				<prompt>Please use numeric digits only.</prompt>
+				<reprompt />
+			</nomatch>
+		</field>
+
+		<filled namelist="customer_id" mode="all">
+   			<prompt>
+    				You said <value expr="customer_id" />. 
+   			</prompt>
+  		</filled>
+		
+		<block>
+			<prompt>Thank you for calling.  Have a nice day.  Goodbye.</prompt>
+		</block>
+	</form>
+</vxml>
+
